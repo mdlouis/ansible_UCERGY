@@ -1,0 +1,14 @@
+- name: configure DNS with file resolv.conf 
+  hosts: all
+  vars:
+    - DNS1: "8.8.8.8"
+    - DNS2: "8.8.4.4"
+  tasks:
+    - name: Configure file resolv.conf
+      lineinfile: 
+        path: /etc/resolv.conf
+        regexp: '^nameserver .*'
+        line: "{{ item }}"
+      with_items: 
+        - "{{ DNS1 }}"
+        - "{{ DNS2 }}"
